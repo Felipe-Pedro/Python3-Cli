@@ -5,8 +5,8 @@ from Table import table
 
 class cli:
     
-    TO_CSV, FROM_CSV = 0, 0
-    TO_JSON, FROM_JSON = 1, 1
+    CSV_FORMAT = 0
+    JSON_FORMAT = 1
     
     scene_name_dict = {}
     symbol = None
@@ -110,8 +110,9 @@ class cli:
         self.scene_name_dict[name] = scene(name, scene_options, scene_body, links)
         
     
-    def add_table(self, name: str, table_options: list, table_info: dict, links: list, 
-                  changeble_table: bool = True, change_callback: 'function' = None, save_file: str = None):
+    def add_table(self, name: str, table_options: list, table_info: dict or "DataFrame", links: list, 
+                  changeble_table: bool = True, change_callback: 'function' = None, save_file: str = None,
+                  read_file: tuple = None):
         """
         Create a new table scene and add it in the scenes dict with the following params:
 
@@ -130,23 +131,30 @@ class cli:
         :param save_file (tuple): A optional param which receives a tuple containing the first index as a path
                                   with the file name, and the second index as the saving format. It accepts only
                                   .csv and .json files by now.
+        :param read_file (tuple): A optional param which reives a tuple containing the first index as a path
+                                  with the file name you want to extract the data from to make a table scene,
+                                  and the second index as the format of the file. It accepts only .csv and .json,
+                                  files by now, default = None
+
+        *** USE CLI CONSTANTS (*_FORMAT) TO DEFINE THE FORMAT OF THE SAVE_FILE AND READ_FILE PARAMS ***
         """
 
         self.scene_name_dict[name] = table(name, table_options, table_info, links, 
                                         changeble_table=changeble_table, change_callback=change_callback,
-                                        save_file=save_file)
+                                        save_file=save_file, read_file=read_file)
 
 
 if __name__ == "__main__":
     cli_obj = cli()
 
     table_dict = {
-        "1": ["a", "b", "c"],
-        "2": ["a", "b", "c"]
+        "Coluna1": ["Valor 1", "Valor 2", "Valor 3"],
+        "Coluna2": ["Valor 1", "Valor 2", "Valor 3"]
     }
 
     cli_obj.add_scene("intro", ["See table"], "Use one to see the table", ["table"])
-    cli_obj.add_table("table", ["Back to intro", "Teste 1", "Teste 2"], table_dict, ["intro"])
+    cli_obj.add_table("table", ["Back to intro"], table_dict, ["intro"], save_file=("teste.json", cli.JSON_FORMAT),
+                       read_file=("teste.json", cli.JSON_FORMAT))
 
     cli_obj.set_first_scene_name("intro")
 

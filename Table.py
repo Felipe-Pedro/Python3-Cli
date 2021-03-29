@@ -4,7 +4,8 @@ from os import system
 
 class table:
     def __init__(self, name: str, table_options: list, table_info: dict or "DataFrame", links: list,
-                changeble_table: bool = True, change_callback: 'function' = None, save_file: tuple = None):
+                changeble_table: bool = True, change_callback: 'function' = None, save_file: tuple = None,
+                read_file: tuple = None):
         """
         Initiates the table object with de following parameters:
 
@@ -22,26 +23,40 @@ class table:
                                            to work with the updated data, default = None.
         :param save_file (tuple): A optional param which receives a tuple containing the first index as a path
                                   with the file name, and the second index as the saving format. It accepts only
-                                  .csv and .json files by now.
+                                  .csv and .json files by now, default = None.
+        :param read_file (tuple): A optional param which reives a tuple containing the first index as a path
+                                  with the file name you want to extract the data from to make a table scene,
+                                  and the second index as the format of the file. It accepts only .csv and .json,
+                                  files by now, default = None
         """
 
         self.name = name
-        self.table_info = pd.DataFrame(table_info) if type(table_info) is dict else table_info
         self.table_options = table_options
         self.links = links
         self.change_callback = change_callback
 
         self.save_file = save_file
+        self.read_file = read_file
 
         if save_file:
             self.save_file_path = save_file[0]
             self.save_file_format = save_file[1]
 
+        if read_file:
+            self.table_info = self.extract_data_frame_from_file(read_file[0], read_file[1])
+        else:
+            self.table_info = pd.DataFrame(table_info) if type(table_info) is dict else table_info
+
         if changeble_table:
             self.table_options = ['Change table'] + self.table_options
             self.links = [self.change_data] + self.links
 
+    def extract_data_frame_from_file(self, path, file_format) -> "DataFrame":
+        if file_format == 0:
+            return pd.read_csv(path)
 
+        if file_format == 1:
+            return pd.read_json(path)
 
     def render_options(self) -> None:
         """
@@ -64,6 +79,7 @@ class table:
         print('\n\n')
         print(self.table_info)
         print('\n')
+
 
 
     def file_saver(self) -> None:
