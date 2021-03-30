@@ -51,7 +51,14 @@ class table:
             self.table_options = ['Change table'] + self.table_options
             self.links = [self.change_data] + self.links
 
-    def extract_data_frame_from_file(self, path, file_format) -> "DataFrame":
+    def extract_data_frame_from_file(self, path: str, file_format: int) -> "DataFrame":
+        """
+        It reads the file with the specified format and return the panda's DataFrame
+
+        :param path (string): The specified  file path which will be readen.
+        :param file_format (int): The specified file format which will be readen.
+        """
+
         if file_format == 0:
             return pd.read_csv(path)
 
@@ -83,6 +90,10 @@ class table:
 
 
     def file_saver(self) -> None:
+        """
+        It saves the file with de updated data with the specified format.
+        """
+
         if self.save_file_format == 0:
             self.table_info.to_csv(self.save_file_path)
 

@@ -96,7 +96,7 @@ class cli:
                 self.current_scene.render()
                 
 
-    def add_scene(self, name: str, scene_options: list, scene_body: str, links: list):
+    def add_scene(self, name: str, scene_options: list, scene_body: str, links: list) -> None:
         """
         Create a new scene and add it in the scenes dict with the following params:
 
@@ -112,7 +112,7 @@ class cli:
     
     def add_table(self, name: str, table_options: list, table_info: dict or "DataFrame", links: list, 
                   changeble_table: bool = True, change_callback: 'function' = None, save_file: str = None,
-                  read_file: tuple = None):
+                  read_file: tuple = None) -> None:
         """
         Create a new table scene and add it in the scenes dict with the following params:
 
