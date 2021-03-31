@@ -1,7 +1,7 @@
 from os import system
 
 from Scene import scene
-from Table import table
+from Table_scene import table
 
 class cli:
     
@@ -94,6 +94,9 @@ class cli:
                 self.current_scene = self.scene_name_dict[link_to_scene_name]
                 
                 self.current_scene.render()
+            else:
+                self.current_scene.render()
+                print(f'\n#That\'s is not a valid option#')
                 
 
     def add_scene(self, name: str, scene_options: list, scene_body: str, links: list) -> None:
@@ -110,7 +113,7 @@ class cli:
         self.scene_name_dict[name] = scene(name, scene_options, scene_body, links)
         
     
-    def add_table(self, name: str, table_options: list, table_info: dict or "DataFrame", links: list, 
+    def add_table_scene(self, name: str, table_options: list, table_info: dict or "DataFrame", links: list, 
                   changeble_table: bool = True, change_callback: 'function' = None, save_file: str = None,
                   read_file: tuple = None) -> None:
         """
@@ -153,7 +156,7 @@ if __name__ == "__main__":
     }
 
     cli_obj.add_scene("intro", ["See table"], "Use one to see the table", ["table"])
-    cli_obj.add_table("table", ["Back to intro"], table_dict, ["intro"], save_file=("teste.json", cli.JSON_FORMAT),
+    cli_obj.add_table_scene("table", ["Back to intro"], table_dict, ["intro"], save_file=("teste.json", cli.JSON_FORMAT),
                        read_file=("teste.json", cli.JSON_FORMAT))
 
     cli_obj.set_first_scene_name("intro")
