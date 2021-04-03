@@ -13,7 +13,7 @@ Python3-Cli is a library focused in make cli programs with python3 (obviously). 
 
 * Pandas
 
-Pandas is required to make and who the tables
+Pandas is required to make and show the tables
 
 # How it works
 
