@@ -36,3 +36,8 @@ Pandas is required to make and show the tables
 4. Start the app loop.
   ```python
   cli.render_forever()
+  ```
+
+# Conclusion
+
+I do lot's of cli programms to myself and a library for it will surely help me, i wish that can be helpful for you too. Feel free to make comments and constructive critcism.
