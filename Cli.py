@@ -64,7 +64,7 @@ class cli:
             return True
 
 
-    def render_forever(self) -> bool:
+    def render_forever(self) -> None:
         """
         Display the first scene and start the eternal loop. If r (the user input) is numeric and
         the number is equal one of the index in current scene's link list it will redirect the user
@@ -95,6 +95,8 @@ class cli:
                 
                 self.current_scene.render()
             else:
+
+                
                 self.current_scene.render()
                 print(f'\n#That\'s is not a valid option#')
                 
