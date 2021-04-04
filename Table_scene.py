@@ -2,7 +2,7 @@ import pandas as pd
 
 from os import system
 
-class table:
+class table_scene:
     def __init__(self, name: str, table_options: list, table_info: dict or "DataFrame", links: list,
                 changeble_table: bool = True, change_callback: 'function' = None, save_file: tuple = None,
                 read_file: tuple = None):
@@ -28,6 +28,7 @@ class table:
                                   with the file name you want to extract the data from to make a table scene,
                                   and the second index as the format of the file. It accepts only .csv and .json,
                                   files by now, default = None
+        *** USE CLI CONSTANTS (*_FORMAT) TO DEFINE THE FORMAT OF THE SAVE_FILE AND READ_FILE PARAMS ***
         """
 
         self.name = name

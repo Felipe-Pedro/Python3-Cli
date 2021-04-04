@@ -1,12 +1,11 @@
 # Introduction
 
-Python3-Cli is a library focused in make cli programs with python3 (obviously). The ideia is, you have an cli object which you can interact, and it will take care of everything, even the app loop.
+Python3-Cli is a library focused in make cli programs with python3 (obviously). The ideia is, you have an cli object which you add scenes, and it will take care of everything, even the app loop.
 
 # Features
 
 - [x] Regular scene
 - [x] Table scene
-- [ ] Help scene
 - [ ] Auth scene
 
 # Dependencies
@@ -23,17 +22,23 @@ Pandas is required to make and show the tables
   
   cli = cli()
   ```
-2. Add as many scenes as you want.
+2. Create as many scenes as you want.
   ```python
-  cli.add_scene("wellcome_scene", ["See information", "Go to table"], "Wellcome to the app, fell free to explore", ["info_scene", "table_scene"])
-  cli.add_scene("info_scene", ["Back to the wellcome scene"], "This is an example app :)", ["wellcome_scene"])
-  cli.add_table_scene("table_scene", ["Back to the wellcome scene"], {"Column1": ["Line1", "Line2", "Line3"]}, ["wellcome_scene"])
+  wellcome_scene = scene("wellcome_scene", ["See information", "Go to table"], "Wellcome to the app, fell free to explore", ["info_scene", "info_table"])
+  info_scene = scene("info_scene", ["Back to the wellcome scene"], "This is an example app :)", ["wellcome_scene"])
+  info_table = table_scene("info_table", ["Back to the wellcome scene"], {"Column1": ["Line1", "Line2", "Line3"]}, ["wellcome_scene"])
   ```
-3. Set the first scene which will be shown.
+3. Add the scenes on the cli object.
+  ```python
+  cli.add_scene("wellcome_scene", wellcome_scene)
+  cli.add_scene("info_scene", info_scene)
+  cli.add_scene("info_table", info_table)
+  ```
+4. Set the first scene which will be shown.
   ```python
   cli.set_first_scene_name("wellcome_scene")
   ```
-4. Start the app loop.
+5. Start the app loop.
   ```python
   cli.render_forever()
   ```

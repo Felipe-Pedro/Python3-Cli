@@ -1,7 +1,7 @@
 from os import system
 
 from Scene import scene
-from Table_scene import table
+from Table_scene import table_scene
 
 class cli:
     
@@ -104,55 +104,15 @@ class cli:
                 print(f'\n#That\'s is not a valid option#')
                 
 
-    def add_scene(self, name: str, scene_options: list, scene_body: str, links: list, align_options: int = None,
-                  align_body: int = None) -> None:
+    def add_scene(self, name: str, scene: scene) -> None:
         """
-        Create a new scene and add it in the scenes dict with the following params:
+        Add a new scene in the scenes dict
 
         :param name (string): The name of the scene
-        :param scene_options (list): A list containing all the scene options
-        :param scene_body (string): A string containing the body which will be printed on the screen
-        :param links (list): A list contaning the links to other scenes and tables. The user will be
-                             redirected to the scene when it types the index of the link on the list
+        :param scene (scene): A scene of any type which will be add in the scene dict
         """
 
-        self.scene_name_dict[name] = scene(name, scene_options, scene_body, links, align_options=align_options,
-                                           align_body=align_body)
-        
-    
-    def add_table_scene(self, name: str, table_options: list, table_info: dict or "DataFrame", links: list, 
-                  changeble_table: bool = True, change_callback: 'function' = None, save_file: str = None,
-                  read_file: tuple = None) -> None:
-        """
-        Create a new table scene and add it in the scenes dict with the following params:
-
-        :param name (string): A string containing the name of the table scene
-        :param table_info (dict or panda's DataFrame): A dict which will be transformed into a pandas data frame, 
-                                                       if it isn't already 
-        :param links (list): A list contaning the links to other scenes and tables. The user will be
-                             redirected to the scene when it types the index of the link on the list
-        :param changeble_table (boolean): A optional param which tell if the table can be changed or 
-                                          not, if changeble_table param is true, it will add 'Change table' 
-                                          in the option list and a reference of the change_data function 
-                                          to the link list, default = True
-        :param change_callback (function): A optional param which receives a function that will be called passing 
-                                           all the updated data from the table. Usefull if you need 
-                                           to work with the updated data, default = None.
-        :param save_file (tuple): A optional param which receives a tuple containing the first index as a path
-                                  with the file name, and the second index as the saving format. It accepts only
-                                  .csv and .json files by now.
-        :param read_file (tuple): A optional param which reives a tuple containing the first index as a path
-                                  with the file name you want to extract the data from to make a table scene,
-                                  and the second index as the format of the file. It accepts only .csv and .json,
-                                  files by now, default = None
-
-        *** USE CLI CONSTANTS (*_FORMAT) TO DEFINE THE FORMAT OF THE SAVE_FILE AND READ_FILE PARAMS ***
-        """
-
-        self.scene_name_dict[name] = table(name, table_options, table_info, links, 
-                                        changeble_table=changeble_table, change_callback=change_callback,
-                                        save_file=save_file, read_file=read_file)
-
+        self.scene_name_dict[name] = scene
 
 if __name__ == "__main__":
     cli_obj = cli()
@@ -162,9 +122,11 @@ if __name__ == "__main__":
         "Coluna2": ["Valor 1", "Valor 2", "Valor 3"]
     }
 
-    cli_obj.add_scene("intro", ["See table"], "Use one to see the table", ["table"], align_options=cli.CENTER)
-    cli_obj.add_table_scene("table", ["Back to intro"], table_dict, ["intro"], save_file=("teste.json", cli.JSON_FORMAT),
-                       read_file=("teste.json", cli.JSON_FORMAT))
+    table_info = table_scene("table_info", ["Back to intro"], table_dict, ["intro"])
+    intro_scene = scene("intro", ["See table"], "Send 1 to see the table", ["table_info"], align_options=cli.CENTER)
+
+    cli_obj.add_scene("intro", intro_scene)
+    cli_obj.add_scene("table_info", table_info)
 
     cli_obj.set_first_scene_name("intro")
 
