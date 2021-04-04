@@ -28,6 +28,7 @@ class table_scene:
                                   with the file name you want to extract the data from to make a table scene,
                                   and the second index as the format of the file. It accepts only .csv and .json,
                                   files by now, default = None
+                                  
         *** USE CLI CONSTANTS (*_FORMAT) TO DEFINE THE FORMAT OF THE SAVE_FILE AND READ_FILE PARAMS ***
         """
 

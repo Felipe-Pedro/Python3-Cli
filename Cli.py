@@ -123,7 +123,7 @@ if __name__ == "__main__":
     }
 
     table_info = table_scene("table_info", ["Back to intro"], table_dict, ["intro"])
-    intro_scene = scene("intro", ["See table"], "Send 1 to see the table", ["table_info"], align_options=cli.CENTER)
+    intro_scene = scene("intro", ["See table"], "Send 1 to see the table", ["table_info"], char_per_line=30, align_body=cli.CENTER)
 
     cli_obj.add_scene("intro", intro_scene)
     cli_obj.add_scene("table_info", table_info)
