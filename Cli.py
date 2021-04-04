@@ -8,9 +8,8 @@ class cli:
     CSV_FORMAT = 0
     JSON_FORMAT = 1
 
-    LEFT = 0
-    RIGHT = 1
-    CENTER = 2
+    RIGHT = 0
+    CENTER = 1
     
     scene_name_dict = {}
     symbol = None
@@ -163,13 +162,8 @@ if __name__ == "__main__":
         "Coluna2": ["Valor 1", "Valor 2", "Valor 3"]
     }
 
-<<<<<<< HEAD
-    cli_obj.add_scene("intro", ["See table"], "Use one to see the table", ["table"], align_options=cli.RIGHT)
-    cli_obj.add_table("table", ["Back to intro"], table_dict, ["intro"], save_file=("teste.json", cli.JSON_FORMAT),
-=======
-    cli_obj.add_scene("intro", ["See table"], "Use one to see the table", ["table"])
+    cli_obj.add_scene("intro", ["See table"], "Use one to see the table", ["table"], align_options=cli.CENTER)
     cli_obj.add_table_scene("table", ["Back to intro"], table_dict, ["intro"], save_file=("teste.json", cli.JSON_FORMAT),
->>>>>>> f0969b3f1edbc855e22d9630b5becb460613b457
                        read_file=("teste.json", cli.JSON_FORMAT))
 
     cli_obj.set_first_scene_name("intro")

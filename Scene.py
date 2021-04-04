@@ -38,10 +38,11 @@ class scene:
             self.options_string += f"{i} {option}\t"
             i += 1
 
-        if self.align_options == 1:
-            print(get_terminal_size()[1])
-            self.options_string = self.options_string.rjust(get_terminal_size()[1])
+        if self.align_options == 0:
+            self.options_string = self.options_string.rjust(120)
 
+        if self.align_options == 1:
+            self.options_string = self.options_string.center(120)
 
     def render(self):
         """
