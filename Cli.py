@@ -1,12 +1,16 @@
 from os import system
 
 from Scene import scene
-from Table import table
+from Table_scene import table
 
 class cli:
     
     CSV_FORMAT = 0
     JSON_FORMAT = 1
+
+    LEFT = 0
+    RIGHT = 1
+    CENTER = 2
     
     scene_name_dict = {}
     symbol = None
@@ -96,7 +100,8 @@ class cli:
                 self.current_scene.render()
                 
 
-    def add_scene(self, name: str, scene_options: list, scene_body: str, links: list) -> None:
+    def add_scene(self, name: str, scene_options: list, scene_body: str, links: list, align_options: int = None,
+                  align_body: int = None) -> None:
         """
         Create a new scene and add it in the scenes dict with the following params:
 
@@ -107,7 +112,8 @@ class cli:
                              redirected to the scene when it types the index of the link on the list
         """
 
-        self.scene_name_dict[name] = scene(name, scene_options, scene_body, links)
+        self.scene_name_dict[name] = scene(name, scene_options, scene_body, links, align_options=align_options,
+                                           align_body=align_body)
         
     
     def add_table(self, name: str, table_options: list, table_info: dict or "DataFrame", links: list, 
@@ -152,7 +158,7 @@ if __name__ == "__main__":
         "Coluna2": ["Valor 1", "Valor 2", "Valor 3"]
     }
 
-    cli_obj.add_scene("intro", ["See table"], "Use one to see the table", ["table"])
+    cli_obj.add_scene("intro", ["See table"], "Use one to see the table", ["table"], align_options=cli.RIGHT)
     cli_obj.add_table("table", ["Back to intro"], table_dict, ["intro"], save_file=("teste.json", cli.JSON_FORMAT),
                        read_file=("teste.json", cli.JSON_FORMAT))
 
