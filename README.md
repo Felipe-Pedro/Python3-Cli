@@ -16,29 +16,33 @@ Pandas is required to make and show the tables
 
 # How it works
 
-1. Import and create the cli object.
+1. Import the classes you gonna use.
   ```python
-  from Cli import cli
-  
+  from cli import cli
+  from scene import scene
+  from table_scene import table_scene
+  ```
+2. Create the cli object.
+  ```python
   cli = cli()
   ```
-2. Create as many scenes as you want.
+3. Create as many scenes as you want.
   ```python
   wellcome_scene = scene("wellcome_scene", ["See information", "Go to table"], "Wellcome to the app, fell free to explore", ["info_scene", "info_table"])
   info_scene = scene("info_scene", ["Back to the wellcome scene"], "This is an example app :)", ["wellcome_scene"])
   info_table = table_scene("info_table", ["Back to the wellcome scene"], {"Column1": ["Line1", "Line2", "Line3"]}, ["wellcome_scene"])
   ```
-3. Add the scenes on the cli object.
+4. Add the scenes on the cli object.
   ```python
   cli.add_scene("wellcome_scene", wellcome_scene)
   cli.add_scene("info_scene", info_scene)
   cli.add_scene("info_table", info_table)
   ```
-4. Set the first scene which will be shown.
+5. Set the first scene which will be shown.
   ```python
   cli.set_first_scene_name("wellcome_scene")
   ```
-5. Start the app loop.
+6. Start the app loop.
   ```python
   cli.render_forever()
   ```
