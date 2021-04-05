@@ -115,6 +115,7 @@ class cli:
         self.scene_name_dict[name] = scene
 
 if __name__ == "__main__":
+
     cli_obj = cli()
 
     table_dict = {
@@ -123,7 +124,8 @@ if __name__ == "__main__":
     }
 
     table_info = table_scene("table_info", ["Back to intro"], table_dict, ["intro"])
-    intro_scene = scene("intro", ["See table"], "Send 1 to see the table", ["table_info"], char_per_line=30, align_body=cli.CENTER)
+    intro_scene = scene("intro", ["See table"], "Send 1 to see the table", ["table_info"], char_per_line=30,
+                        align_body=cli.CENTER, align_options=cli.CENTER)
 
     cli_obj.add_scene("intro", intro_scene)
     cli_obj.add_scene("table_info", table_info)
