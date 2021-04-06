@@ -1,12 +1,12 @@
-from os import get_terminal_size
+from Text_utilities.text_util import *
 
 class scene:
 
     options_string = ""
     body_string = ""
 
-    def __init__(self, name: str, scene_options: list, scene_body: str, links: list, align_options: int = 2,
-                 align_body: int = 2, char_per_line: int = 120):
+    def __init__(self, name: str, scene_options: list, scene_body: str, links: list, 
+                 centralize_options: bool = False, centralize_body: bool = False, char_per_line: int = 120):
         """
         Initiates the scene object with de following parameters:
         
@@ -15,66 +15,43 @@ class scene:
         :param scene_body (string): A string containing the body which will be printed on the screen
         :param links (list): A list contaning the links to other scenes and tables. The user will be
                              redirected to the scene when it types the index of the link on the list.
-        :param align_options (int): Set the side which the options will be aligned, default = 2.
-        :param align_body (int): Set the side which the body will be aligned, default = 2.
+        :param centralize_options (bool): If it is True it will centralize the scene options on the 
+                                          screen, default = False.
+        :param centralize_body (bool): If it is True it will centralize the scene body on the screen, 
+                                       default = False.
         :param char_per_line (int): The number of character printed per line, default = 120.
         """
         self.name = name
         self.scene_options = scene_options
         self.scene_body = scene_body
         self.links = links
-        self.align_options = align_options
-        self.align_body = align_body
+        self.centralize_options = centralize_options
+        self.centralize_body = centralize_body
         self.char_per_line = char_per_line
 
         self.make_options_string()
         self.make_body_string()
 
-    def align_position(self, string_to_align, position_to_align):
-        character_per_line_on_windows = 120
-
-        if position_to_align == 0:
-            return string_to_align.rjust(character_per_line_on_windows)
-        
-        if position_to_align == 1:
-            return string_to_align.center(character_per_line_on_windows)
-        
-        if position_to_align == 2:
-            return string_to_align
-
-    def make_options_string(self):
+    def make_options_string(self) -> None:
         """
-        Make the options string with all the options
+        It formats the scene options.
         """
+        for i in range(0, len(self.scene_options)):
+            self.options_string += f"{i + 1} - {self.scene_options[i]}"
 
-        i = 1
-
-        for option in self.scene_options:
-            self.options_string += f"{i} {option}\t"
-            i += 1
-
-        self.options_string = self.align_position(self.options_string, self.align_options)
+        if self.centralize_options:
+            self.options_string = self.options_string.center(120)
 
     def make_body_string(self):
-        
-        max_lines = len(self.scene_body) / self.char_per_line
-        rest = max_lines % 10
+        """
+        It formats the scene body.
+        """
+        body_list = divide_string(self.scene_body, self.char_per_line)
 
-        start = 0
-        end = self.char_per_line + 1
+        if self.centralize_body:
+            centralize_list(body_list)
 
-        for i in range(0, int(max_lines), ):
-            self.body_string += self.scene_body[start:end]
-            self.body_string += "\n"
-
-            start += self.char_per_line
-            end += self.char_per_line
-        else:
-            if rest != 0:
-                self.body_string += self.scene_body[start:]
-
-        self.body_string = self.align_position(self.body_string, self.align_body)
-            
+        self.body_string = "\n".join(body_list)
 
     def render(self):
         """
