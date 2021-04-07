@@ -2,10 +2,15 @@ import pandas as pd
 
 from os import system
 
+from Scene_utilities.scene_util import make_options_string
+
 class table_scene:
+
+    
+
     def __init__(self, name: str, table_options: list, table_info: dict or "DataFrame", links: list,
                 changeble_table: bool = True, change_callback: 'function' = None, save_file: tuple = None,
-                read_file: tuple = None):
+                read_file: tuple = None, centralize_options=True):
         """
         Initiates the table object with de following parameters:
 
@@ -53,6 +58,8 @@ class table_scene:
             self.table_options = ['Change table'] + self.table_options
             self.links = [self.change_data] + self.links
 
+        self.table_options = make_options_string(self.table_options, centralize_options)
+
     def extract_data_frame_from_file(self, path: str, file_format: int) -> "DataFrame":
         """
         It reads the file with the specified format and return the panda's DataFrame
@@ -67,29 +74,13 @@ class table_scene:
         if file_format == 1:
             return pd.read_json(path)
 
-    def render_options(self) -> None:
-        """
-        Display all the table options on the screen
-        """
-
-        option_counter = 1
-
-        for option in self.table_options:
-            print(f'{option_counter} - {option}', end='\t')
-            option_counter += 1
-
     def render(self) -> None:
         """
         It render all the options and print the data frame (table_info)
         """
-
-        self.render_options()
-
-        print('\n\n')
+        print(self.table_options)
+        print("\n")
         print(self.table_info)
-        print('\n')
-
-
 
     def file_saver(self) -> None:
         """

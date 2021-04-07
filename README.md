@@ -34,9 +34,9 @@ Pandas is required to make and show the tables
   ```
 4. Add the scenes on the cli object.
   ```python
-  cli.add_scene("wellcome_scene", wellcome_scene)
-  cli.add_scene("info_scene", info_scene)
-  cli.add_scene("info_table", info_table)
+  cli.add_scene(wellcome_scene)
+  cli.add_scene(info_scene)
+  cli.add_scene(info_table)
   ```
 5. Set the first scene which will be shown.
   ```python

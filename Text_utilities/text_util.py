@@ -5,6 +5,8 @@ def get_string_in_range(string, number, string_size) -> str:
     :param string (str): The string which will be devided.
     :param number (int): The size of each piece of string.
     """
+    #If the size of the string if less than the number of characters it will return the full string,
+    #and end the function
     if number > string_size:
         yield string
         return

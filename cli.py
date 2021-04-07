@@ -60,7 +60,7 @@ class cli:
         :param user_input (int): It receiver the user_input.
         """
 
-        if  user_input >= 0 and user_input <= len(self.current_scene.get_links()):
+        if  user_input >= 0 and user_input < len(self.current_scene.get_links()):
             return True
 
 
@@ -101,15 +101,14 @@ class cli:
                 print(f'\n#That\'s is not a valid option#')
                 
 
-    def add_scene(self, name: str, scene: scene) -> None:
+    def add_scene(self, scene: scene) -> None:
         """
         Add a new scene in the scenes dict.
 
-        :param name (string): The name of the scene.
         :param scene (scene): A scene of any type which will be add in the scene dict.
         """
 
-        self.scene_name_dict[name] = scene
+        self.scene_name_dict[scene.name] = scene
 
 if __name__ == "__main__":
 
@@ -121,11 +120,11 @@ if __name__ == "__main__":
     }
 
     table_info = table_scene("table_info", ["Back to intro"], table_dict, ["intro"])
-    intro_scene = scene("intro", ["See table"], "Testando com outras strings", ["table_info"], char_per_line=30,
+    intro_scene = scene("intro", ["See table", "No where"], "Testando com outras strings", ["table_info"], char_per_line=30,
                         centralize_options=True, centralize_body=True)
 
-    cli_obj.add_scene("intro", intro_scene)
-    cli_obj.add_scene("table_info", table_info)
+    cli_obj.add_scene(intro_scene)
+    cli_obj.add_scene(table_info)
 
     cli_obj.set_first_scene_name("intro")
 

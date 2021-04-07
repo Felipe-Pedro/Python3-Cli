@@ -1,9 +1,6 @@
-from Text_utilities.text_util import *
+from Scene_utilities.scene_util import *
 
 class scene:
-
-    options_string = ""
-    body_string = ""
 
     def __init__(self, name: str, scene_options: list, scene_body: str, links: list, 
                  centralize_options: bool = False, centralize_body: bool = False, char_per_line: int = 120):
@@ -22,45 +19,21 @@ class scene:
         :param char_per_line (int): The number of character printed per line, default = 120.
         """
         self.name = name
-        self.scene_options = scene_options
-        self.scene_body = scene_body
         self.links = links
         self.centralize_options = centralize_options
         self.centralize_body = centralize_body
-        self.char_per_line = char_per_line
 
-        self.make_options_string()
-        self.make_body_string()
-
-    def make_options_string(self) -> None:
-        """
-        It formats the scene options.
-        """
-        for i in range(0, len(self.scene_options)):
-            self.options_string += f"{i + 1} - {self.scene_options[i]}"
-
-        if self.centralize_options:
-            self.options_string = self.options_string.center(120)
-
-    def make_body_string(self):
-        """
-        It formats the scene body.
-        """
-        body_list = divide_string(self.scene_body, self.char_per_line)
-
-        if self.centralize_body:
-            centralize_list(body_list)
-
-        self.body_string = "\n".join(body_list)
-
+        self.scene_options = make_options_string(scene_options, centralize_options)
+        self.scene_body = make_body_string(scene_body, char_per_line, centralize_body)
+        
     def render(self):
         """
-        Call render_title function and show the scene body on the screen 
+        Print all the scene information.
         """
 
-        print(self.options_string)
-        print('\n', end="\n")
-        print(self.body_string)
+        print(self.scene_options)
+        print('\n')
+        print(self.scene_body)
 
 
     def get_links(self) -> list:
