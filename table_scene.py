@@ -10,7 +10,7 @@ class table_scene:
 
     def __init__(self, name: str, table_options: list, table_info: dict or "DataFrame", links: list,
                 changeble_table: bool = True, change_callback: 'function' = None, save_file: tuple = None,
-                read_file: tuple = None, centralize_options=True):
+                read_file: tuple = None, centralize_options=False):
         """
         Initiates the table object with de following parameters:
 
