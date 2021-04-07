@@ -1,6 +1,6 @@
 # Introduction
 
-Python3-Cli is a library focused in make cli programs with python3 (obviously). The ideia is, you have an cli object which you add scenes, and it will take care of everything, even the app loop.
+Python3-Cli is a library focused in make cli programs with python3 (obviously). You can set up scenes and tables and interact with them, the app loop is handled by the cli object.
 
 # Features
 
@@ -10,9 +10,15 @@ Python3-Cli is a library focused in make cli programs with python3 (obviously). 
 
 # Dependencies
 
+## Internal dependencies
+* os
+
+Os is used to clean the window.
+
+## External dependencies
 * Pandas
 
-Pandas is required to make and show the tables
+Pandas is required to make and show the tables.
 
 # How it works
 
