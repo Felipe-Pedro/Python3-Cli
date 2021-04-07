@@ -6,23 +6,21 @@ from Scene_utilities.scene_util import make_options_string
 
 class table_scene:
 
-    
-
     def __init__(self, name: str, table_options: list, table_info: dict or "DataFrame", links: list,
                 changeble_table: bool = True, change_callback: 'function' = None, save_file: tuple = None,
                 read_file: tuple = None, centralize_options=False):
         """
         Initiates the table object with de following parameters:
 
-        :param name (string): A string containing the name of the table scene
+        :param name (string): A string containing the name of the table scene.
         :param table_info (dict or panda's DataFrame): A dict which will be transformed into a pandas data frame, 
-                                                       if it isn't already 
+                                                       if it isn't already.
         :param links (list): A list contaning the links to other scenes and tables. The user will be
-                             redirected to the scene when it types the index of the link on the list
+                             redirected to the scene when it types the index of the link on the list.
         :param changeble_table (boolean): A optional param which tell if the table can be changed or 
                                           not, if changeble_table param is true, it will add 'Change table' 
                                           in the option list and a reference of the change_data function 
-                                          to the link list, default = True
+                                          to the link list, default = True.
         :param change_callback (function): A optional param which receives a function that will be called passing 
                                            all the updated data from the table. Usefull if you need 
                                            to work with the updated data, default = None.
@@ -32,7 +30,9 @@ class table_scene:
         :param read_file (tuple): A optional param which reives a tuple containing the first index as a path
                                   with the file name you want to extract the data from to make a table scene,
                                   and the second index as the format of the file. It accepts only .csv and .json,
-                                  files by now, default = None
+                                  files by now, default = None.
+        :param centralize_options (bool): If it is True it will centralize the scene options on the 
+                                          screen, default = False.
                                   
         *** USE CLI CONSTANTS (*_FORMAT) TO DEFINE THE FORMAT OF THE SAVE_FILE AND READ_FILE PARAMS ***
         """
@@ -41,9 +41,6 @@ class table_scene:
         self.table_options = table_options
         self.links = links
         self.change_callback = change_callback
-
-        self.save_file = save_file
-        self.read_file = read_file
 
         if save_file:
             self.save_file_path = save_file[0]
@@ -82,7 +79,7 @@ class table_scene:
         print("\n")
         print(self.table_info)
 
-    def file_saver(self) -> None:
+    def save_data_in_file(self) -> None:
         """
         It saves the file with de updated data with the specified format.
         """
@@ -119,7 +116,7 @@ class table_scene:
             self.change_callback(self.table_info)
         
         if self.save_file:
-            self.file_saver()
+            self.save_data_in_file()
 
     def get_links(self) -> list:
         return self.links

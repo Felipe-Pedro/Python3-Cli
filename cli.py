@@ -12,14 +12,22 @@ class cli:
     symbol = None
     current_scene = None
 
-    def __init__(self, input_demarcation: str = ">"):
+    def __init__(self, input_demarcation: str = ">", scene_option_error: str = "\n#That's is not a valid option#",
+                 scene_name_error: str = "\n#That scene don't exist#"):
         """
         It create the cli object
 
         :param input_demarcation (string): It is the symbol which will be displayed on the beginning of the 
                                            input line, default = >.
+        :param scene_option_error (string): The error massage which will appear when the user type a non 
+                                            valid option, default = \n#That's is not a valid option#.
+        :param scene_name_error (string): The error massage which will appear when the user tries to enter
+                                          in a non existent scene, default = \n#That scene don't exist#.
+
         """
         self.input_demarcation = input_demarcation
+        self.scene_option_error = scene_option_error
+        self.scene_name_error = scene_name_error
 
     def set_first_scene_name(self, first_scene: str) -> None:
         """
@@ -41,29 +49,6 @@ class cli:
         if type(link_to_scene_name) is not str:
             return True
 
-    
-    def is_user_input_a_integer(self, user_input: str or int) -> bool:
-        """
-        It returns True if the user_input's type is int.
-
-        :param user_input(string or int): It receives the user input which can be a string or a integer.
-        """
-
-        if type(user_input) is int:
-            return True
-
-
-    def is_user_input_in_range_of_scene_link(self, user_input: int) -> bool:
-        """
-        It returns True if the user_input is on the range of the scene link's list.
-
-        :param user_input (int): It receiver the user_input.
-        """
-
-        if  user_input >= 0 and user_input < len(self.current_scene.get_links()):
-            return True
-
-
     def render_forever(self) -> None:
         """
         Display the first scene and start the eternal loop. If r (the user input) is numeric and
@@ -77,14 +62,14 @@ class cli:
 
         while True:
             user_input = input(f"\n{self.input_demarcation} ")
-            user_input = int(user_input) - 1 if user_input.isdigit() else user_input
 
             system('cls')
 
-            if self.is_user_input_a_integer(user_input) and self.is_user_input_in_range_of_scene_link(user_input):
+            try:
+                option = int(user_input) - 1
 
                 links = self.current_scene.get_links()
-                link_to_scene_name = links[user_input]
+                link_to_scene_name = links[option]
 
                 if self.is_link_to_scene_name_a_function(link_to_scene_name):
                     link_to_scene_name()
@@ -92,13 +77,16 @@ class cli:
                     system('cls')
 
                 self.current_scene = self.scene_name_dict[link_to_scene_name]
-                
+                    
                 self.current_scene.render()
-            else:
+            
+            except ValueError:
+                self.current_scene.render()
+                print(self.scene_option_error)
 
-                
+            except IndexError:
                 self.current_scene.render()
-                print(f'\n#That\'s is not a valid option#')
+                print(self.scene_name_error)
                 
 
     def add_scene(self, scene: scene) -> None:
@@ -120,7 +108,7 @@ if __name__ == "__main__":
     }
 
     table_info = table_scene("table_info", ["Back to intro"], table_dict, ["intro"])
-    intro_scene = scene("intro", ["See table", "No where"], "Testando com outras strings", ["table_info"], char_per_line=30,
+    intro_scene = scene("intro", ["See table", "No where"], "Send 1 to see the table", ["table_info"], char_per_line=30,
                         centralize_options=True, centralize_body=True)
 
     cli_obj.add_scene(intro_scene)
